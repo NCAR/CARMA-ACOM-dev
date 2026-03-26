@@ -1,5 +1,21 @@
 ===============================================================
 
+Tag name: v4.12
+Originator(s): Francis Vitt (fvitt)
+
+Update Makefile for intel's ifx compiler
+
+M       Makefile
+M       tests/bench/carma_growtest.txt
+M       doc/ChangeLog
+
+The legacy ifort intel compiler on NCAR's derecho and casper machines
+has been deprecated and will not be available in the future and thus
+the need to migrate to ifx intel compiler.  The compiler change on casper
+produced differences in growtest bench results.
+
+===============================================================
+
 Tag name: v4.11
 Originator(s): Ilaria Quaglia (ilaria-quaglia)
 Date: 28 Aug 2005
