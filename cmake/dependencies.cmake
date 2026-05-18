@@ -1,4 +1,3 @@
-find_package(PkgConfig REQUIRED)
 include(FetchContent)
 
 ##################################################################################
@@ -33,22 +32,7 @@ endif()
 ##################################################################################
 # NetCDF
 
-if(CARMA_ENABLE_NETCDF)
-  find_package(PkgConfig REQUIRED)
-
-  pkg_check_modules(netcdff REQUIRED IMPORTED_TARGET netcdf-fortran)
-  pkg_check_modules(netcdfc REQUIRED IMPORTED_TARGET netcdf)
-
-  # Get the include directories from pkg-config
-  execute_process(
-    COMMAND pkg-config --variable=includedir netcdf-fortran
-    OUTPUT_VARIABLE NETCDF_FORTRAN_INCLUDE_DIR
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
-  
-  # Add the include directory to the project
-  include_directories(${NETCDF_FORTRAN_INCLUDE_DIR})  
-endif()
+find_package(NetCDF REQUIRED)
 
 ##################################################################################
 # Google Test
