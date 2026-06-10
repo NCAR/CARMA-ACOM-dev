@@ -20,8 +20,8 @@ target_include_directories(
 target_link_libraries(
   carma_object
   PRIVATE
-    netCDF::netcdff
-    netCDF::netcdf
+    carma::netcdf_fortran
+    carma::netcdf_c
     ${LAPACK_LIBRARIES}
     LAPACK::LAPACK
     ${BLAS_LIBRARIES}
