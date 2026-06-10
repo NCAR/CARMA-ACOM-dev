@@ -36,9 +36,10 @@ endif()
 # MUSICA such as CATChem) NetCDF has usually already been located and exposed as
 # an imported target. Different finders use different target names, so probe the
 # common variants and reuse a host-provided target before searching ourselves.
-# Only when nothing is found do we fall back to pkg-config. CARMA's own sources
-# link the canonical carma::netcdf_c / carma::netcdf_fortran targets defined
-# below, decoupling them from however NetCDF was located.
+# Only when nothing is found do we fall back to pkg-config. The resolved target
+# names are stored in CARMA_NETCDF_C_TARGET / CARMA_NETCDF_FORTRAN_TARGET and
+# linked directly (we avoid wrapping them in an imported target, which would leak
+# an unresolvable target into the exported link interface).
 
 # Return the first of ARGN that already exists as a target (target names are
 # case-sensitive, so we list each convention explicitly).
@@ -73,12 +74,6 @@ else()
   set(CARMA_NETCDF_C_TARGET PkgConfig::netcdfc)
   set(CARMA_NETCDF_FORTRAN_TARGET PkgConfig::netcdff)
 endif()
-
-# Canonical targets CARMA's sources link against, regardless of origin.
-add_library(carma::netcdf_c INTERFACE IMPORTED GLOBAL)
-target_link_libraries(carma::netcdf_c INTERFACE ${CARMA_NETCDF_C_TARGET})
-add_library(carma::netcdf_fortran INTERFACE IMPORTED GLOBAL)
-target_link_libraries(carma::netcdf_fortran INTERFACE ${CARMA_NETCDF_FORTRAN_TARGET})
 
 ##################################################################################
 # Google Test
