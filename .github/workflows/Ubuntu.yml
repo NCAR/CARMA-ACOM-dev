@@ -29,12 +29,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake gfortran libnetcdf-dev netcdf-bin libnetcdff-dev liblapack-dev liblapacke-dev
+          sudo apt-get install -y libblas-dev valgrind
 
       - name: Run Cmake
-        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{ matrix.build_type }} -D CARMA_ENABLE_NETCDF=${{ matrix.enable_netcdf }} -D CARMA_ENABLE_MEMCHECK=ON -D CMAKE_POLICY_VERSION_MINIMUM=3.5
+        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{ matrix.build_type }} -D CARMA_ENABLE_NETCDF=${{ matrix.enable_netcdf }} -D CARMA_ENABLE_MEMCHECK=ON -D CMAKE_POLICY_VERSION_MINIMUM=3.5 -D CMAKE_Fortran_FLAGS="-ffree-line-length-none"
 
       - name: Build
-        run: cmake --build build --config ${{ matrix.build_type }} --parallel 10
+        run: cmake --build build --config ${{ matrix.build_type }}
 
       - name: Run tests
         run: |

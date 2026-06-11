@@ -2,7 +2,8 @@
 # Jamison A. Smith, AKA JAS
 # April 26, 2007
 
-FORTRAN =	ifort
+FORTRAN =	ifx
+#FORTRAN =	ifort
 #FORTRAN =	pgf90
 #FORTRAN =	pathf90
 #FORTRAN =	gfortran
@@ -29,6 +30,23 @@ ifeq ($(FORTRAN),ifort)
 
   # Debug options.
   FFLAGS += -g -O0 -traceback -fp-stack-check -check bounds -check uninit -fpe0 -ftrapuv
+
+  # Open/MP
+  FFLAGS += -qopenmp
+
+  # The -qmkl flag if for linking to LAPACK lib
+  LDFLAGS = $(FFLAGS) -no-pie -L/opt/local/lib -qmkl
+
+  # Add options for the netcdf libraries
+  LDFLAGS += -L/opt/local/lib -lnetcdff -L/opt/local/lib -Wl,-headerpad_max_install_names -lnetcdf -lnetcdf
+
+endif
+
+ifeq ($(FORTRAN),ifx)
+  FFLAGS += -fp-model precise
+
+  # Debug options.
+  FFLAGS += -g -O0 -traceback -check bounds -fpe0 -ftrapuv
 
   # Open/MP
   FFLAGS += -qopenmp

@@ -3,6 +3,9 @@
 
 if(CARMA_ENABLE_MEMCHECK)
   find_program(MEMORYCHECK_COMMAND "valgrind")
+  if(NOT MEMORYCHECK_COMMAND)
+    message(FATAL_ERROR "Could not find valgrind for memory checking")
+  endif()
 endif()
 
 ################################################################################
