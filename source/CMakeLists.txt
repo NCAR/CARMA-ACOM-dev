@@ -20,18 +20,12 @@ target_include_directories(
 target_link_libraries(
   carma_object
   PRIVATE
+    ${CARMA_NETCDF_FORTRAN_TARGET}
+    ${CARMA_NETCDF_C_TARGET}
     ${LAPACK_LIBRARIES}
     LAPACK::LAPACK
     ${BLAS_LIBRARIES}
 )
-if(CARMA_ENABLE_NETCDF)
-  target_link_libraries(
-    carma_object
-    PUBLIC
-      PkgConfig::netcdff
-      PkgConfig::netcdfc
-  )
-endif()
 
 add_library(carma $<TARGET_OBJECTS:carma_object>)
 add_library(musica::carma ALIAS carma)
